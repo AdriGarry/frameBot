@@ -95,3 +95,20 @@ function closeUIServer(breakDuration) {
 	// servor.close();
 	ui = null;
 }
+
+const sys = require('sys');
+const spawn = require('child_process').spawn;
+// const filename = process.ARGV[2];
+// if (!filename) return sys.puts('Usage: node <server.js> <filename>');
+
+var tail = spawn('tail', ['-f', Core._LOG + Core.name + '.log']);
+
+http
+	.createServer(function(req, res) {
+		sys.puts('new connection..');
+		res.writeHead(200, { 'Content-Type': 'text/plain;charset=UTF-8' });
+		tail.stdout.on('data', function(data) {
+			res.write(data);
+		});
+	})
+	.listen(3000);
