@@ -150,8 +150,14 @@ function muteAll(message) {
 }
 
 function setVolume(volume) {
-	log.info('setVolume', volume);
-	if (typeof volume === 'object' && volume.hasOwnProperty('value')) volume = volume.value;
+	let isPersistent = false;
+	if (typeof volume === 'object' && volume.hasOwnProperty('value')) {
+		log.info(volume);
+		isPersistent = !!volume.value.isPersistent;
+		volume = volume.value || volume.value.volume;
+		log.info(volume, isPersistent);
+	}
+	log.info('setVolume', volume, isPersistent ? 'isPersistent:' + isPersistent : '');
 	if (!isNaN(volume)) {
 		let volumeUpdate = getVolumeInstructions(parseInt(volume));
 		if (!volumeUpdate) return;
@@ -160,6 +166,10 @@ function setVolume(volume) {
 		while (volumeUpdate.gap) {
 			writeAllMPlayerInstances(sign);
 			volumeUpdate.gap--;
+		}
+		if (isPersistent) {
+			Core.conf('volume', volume);
+			log.INFO('YES VOLUME PERSITED');
 		}
 		Core.run('volume', volume);
 		log.info('Volume level =', volume + '%');
