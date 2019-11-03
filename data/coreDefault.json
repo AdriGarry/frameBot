@@ -21,8 +21,8 @@
 		"watcher": false,
 		"startTime": ".",
 		"alarms": ".",
-		"version": ".",
-		"flux": []
+		"volume": "50",
+		"version": "."
 	},
 	"runtime": {
 		"etat": null,

@@ -154,10 +154,10 @@ function setVolume(volume) {
 	if (typeof volume === 'object' && volume.hasOwnProperty('value')) {
 		log.info(volume);
 		isPersistent = !!volume.value.isPersistent;
-		volume = volume.value || volume.value.volume;
+		volume = volume.value.volume || volume.value;
 		log.info(volume, isPersistent);
 	}
-	log.info('setVolume', volume, isPersistent ? 'isPersistent:' + isPersistent : '');
+	log.info('setVolume', volume, isPersistent ? 'isPersistent: ' + isPersistent : '');
 	if (!isNaN(volume)) {
 		let volumeUpdate = getVolumeInstructions(parseInt(volume));
 		if (!volumeUpdate) return;

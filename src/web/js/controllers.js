@@ -25,18 +25,18 @@ app.controller('UIController', function(
 
 	$scope.isVolumePersistent = false;
 
-	$scope.volumeChange = function() {
+	$scope.volumeChange = function(isVolumePersistent) {
 		let command = {
 			label: 'Volume ' + $scope.dashboard.runningData.volume.value + '%',
 			url: '/flux/interface/sound/volume',
 			value: { value: $scope.dashboard.runningData.volume.value }
 		};
-		if ($scope.isVolumePersistent) {
+		if (isVolumePersistent) {
 			command.label += ' #';
 			command.value = {
 				value: {
 					volume: $scope.dashboard.runningData.volume.value,
-					isPersistent: $scope.isVolumePersistent
+					isPersistent: isVolumePersistent
 				}
 			};
 		}

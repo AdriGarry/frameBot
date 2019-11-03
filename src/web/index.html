@@ -232,7 +232,7 @@
 							<md-slider
 								flex
 								data-ng-model="dashboard.runningData.volume.value"
-								data-ng-change="volumeChange()"
+								data-ng-change="volumeChange(isVolumePersistent)"
 								data-md-discrete
 								md-horizontal
 								data-step="10"
@@ -247,10 +247,11 @@
 					</md-list-item>
 
 					<md-list-item data-ng-click="isVolumePersistent = !isVolumePersistent" title="Volume persistent">
+						{{ isVolumePersistent }}
 						<div flex data-ng-show="!isVolumePersistent">Volume not persisted</div>
 						<div flex data-ng-show="isVolumePersistent">Volume persisted</div>
 						<div flex>
-							<i class="fas fa-lg fa-2x" data-ng-class="isVolumePersistent ? 'fa-lock' : 'fa-lock-open'"></i>
+							<i class="fas fa-lg fa-2x" data-ng-class="isVolumePersistent ? 'fa-lock' : 'fa-unlock'"></i>
 						</div>
 					</md-list-item>
 					<md-divider></md-divider>
