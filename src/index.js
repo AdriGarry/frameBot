@@ -36,3 +36,5 @@ if (Core.conf('mode') == 'test') {
 		require(Core._SRC + 'test/tests.js').launch();
 	}, 1000);
 }
+
+Core.do('service|mail|send', {}, { delay: 3 });

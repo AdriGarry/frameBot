@@ -25,6 +25,7 @@ module.exports = {
 	testConnection: testConnection,
 	getLocalIp: getLocalIp,
 	getPublicIp: getPublicIp,
+	post: post,
 	postOdi: postOdi,
 
 	//file
@@ -241,6 +242,25 @@ function getPublicIp() {
 				log.warn("Can't retreive public IP " + err);
 				reject(err);
 			});
+	});
+}
+
+function post(url, data) {
+	return new Promise((resolve, reject) => {
+		request.post(
+			{
+				url: url,
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				json: true,
+				data: data
+			},
+			(err, httpResponse, body) => {
+				if (err) reject(err);
+				resolve(body);
+			}
+		);
 	});
 }
 
