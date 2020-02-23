@@ -85,7 +85,7 @@ function repeatSong(playlist) {
 
 /** Function to play radio */
 function playRadio(radioId) {
-	Utils.testConnexion()
+	Utils.testConnection()
 		.then(() => {
 			if (Core.run('music') && Core.run('music') === radioId) {
 				log.info('Already playing radio', Core.run('music'));

@@ -1,6 +1,6 @@
 {
 	"name": "core",
-	"version": "7.0.2",
+	"version": "7.0.2-WIP",
 	"private": true,
 	"description": "Core program to autorun and interact!",
 	"main": "core.sh",
@@ -21,6 +21,7 @@
 		"oauth": "0.9.15",
 		"onoff": "3.2.1",
 		"pi-utils": "0.1.7",
+		"pi-wifi": "1.2.0",
 		"randombox": "*",
 		"request": "2.81.0",
 		"rfxcom": "2.1.1",

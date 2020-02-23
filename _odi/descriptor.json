@@ -7,7 +7,7 @@
 	},
 	"modules": {
 		"interfaces": {
-			"base": ["led", "sound", "hardware", "arduino", "hdmi", "rfxcom"],
+			"base": ["led", "sound", "hardware", "arduino", "hdmi", "rfxcom", "wifi"],
 			"full": ["tts"]
 		},
 		"controllers": {
