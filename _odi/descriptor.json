@@ -34,7 +34,15 @@
 	"runtime": {},
 	"rfxcomDevices": {
 		"plugA": { "id": "0x01F4BF8E/1" },
-		"plugB": { "id": "0x01F4BF8E/2" },
+		"plugB": {
+			"id": "0x01F4BF8E/2",
+			"cron": [
+				{
+					"cron": "0 45 6 * * *",
+					"flux": { "id": "interface|rfxcom|send", "data": { "device": "plugB", "value": true } }
+				}
+			]
+		},
 		"plugC": { "id": "0x01F4BF8E/3" },
 		"radiator": {
 			"id": "0x01F4BF8E/4",
