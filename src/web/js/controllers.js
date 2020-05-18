@@ -3,6 +3,7 @@ app.controller('UIController', function (
 	$rootScope,
 	$scope,
 	$location,
+	$anchorScroll,
 	$http,
 	$filter,
 	$timeout,
@@ -128,6 +129,7 @@ app.controller('UIController', function (
 
 	/** Function to show logs */
 	$scope.showLogs = function () {
+		$location.hash('logBottom');
 		$mdSidenav('menu').close();
 		$timeout(function () {
 			$mdSidenav('logs')
@@ -160,6 +162,8 @@ app.controller('UIController', function (
 			let wsData = JSON.parse(event.data);
 			if (Array.isArray($scope.log.data)) $scope.log.data.push(wsData.data);
 			$scope.$apply();
+			// TODO scroll here
+			$anchorScroll();
 		}
 		logTailWebSocket.onclose = function () {
 			console.log('logTail web socket closed!');
@@ -169,6 +173,24 @@ app.controller('UIController', function (
 
 	$scope.closeLogTailWebSocket = function () {
 		if (logTailWebSocket) logTailWebSocket.close();
+	};
+
+	/** Function to refresh logs */
+	$scope.refreshLog = function () {
+		$scope.log.loading = true;
+		UIService.updateLogs(function (logs) {
+			$scope.log.loading = false;
+			$scope.log.data = logs.split('\n');
+			// TODO scroll here
+			$anchorScroll();
+		});
+	};
+
+	/** Function to hide logs */
+	$scope.hideLogs = function () {
+		$mdSidenav('logs')
+			.close()
+			.then(function () { });
 	};
 
 	/** Function to show logs */
@@ -187,23 +209,6 @@ app.controller('UIController', function (
 			});
 		});
 	};
-
-	/** Function to hide logs */
-	$scope.hideLogs = function () {
-		$mdSidenav('logs')
-			.close()
-			.then(function () { });
-	};
-
-	/** Function to refresh logs */
-	$scope.refreshLog = function () {
-		$scope.log.loading = true;
-		UIService.updateLogs(function (logs) {
-			$scope.log.loading = false;
-			$scope.log.data = logs.split('\n');
-		});
-	};
-
 	/** Function to action for header & fab buttons */
 	$scope.action = function (action) {
 		UIService.sendCommand(action, function (data) {
