@@ -28,7 +28,6 @@
 		},
 		"services": {
 			"base": [
-				"context",
 				"buttonAction",
 				"internetNetwork",
 				"time",

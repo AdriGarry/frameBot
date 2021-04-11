@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 'use strict';
 
-const Core = require('./../../core/Core').Core;
+const Core = require('../Core').Core;
 
-const Logger = require('./../../api/Logger'),
-	Flux = require('./../../api/Flux'),
-	Utils = require('./../../api/Utils'),
-	Observers = require('./../../api/Observers');
+const Logger = require('../../api/Logger'),
+	Flux = require('../../api/Flux'),
+	Utils = require('../../api/Utils'),
+	Observers = require('../../api/Observers');
 
 const log = new Logger(__filename);
 

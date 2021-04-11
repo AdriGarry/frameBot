@@ -9,15 +9,22 @@ const Logger = require('../api/Logger.js'),
 const log = new Logger(__filename);
 
 module.exports = class ModuleLoader {
-	constructor(modules) {
+	constructor(modules, modulesPath) {
 		this.modules = modules;
+		this.modulesPath = modulesPath;
 	}
 
-	load() {
+	loadCoreModules() {
+		log.test(this.modules)
+		let modulesLoaded = _requireCoreModules(this.modules, this.modulesPath);
+		log.test('core modules loaded [' + modulesLoaded + ']');
+	}
+
+	loadModules() {
 		Object.keys(this.modules).forEach(moduleType => {
-			let modulesLoaded = _requireModules(moduleType, this.modules[moduleType].base);
+			let modulesLoaded = _requireModules(moduleType, this.modules[moduleType].base, this.modulesPath);
 			if (Core.isAwake() && this.modules[moduleType].hasOwnProperty('full')) {
-				modulesLoaded += ', ' + _requireModules(moduleType, this.modules[moduleType].full);
+				modulesLoaded += ', ' + _requireModules(moduleType, this.modules[moduleType].full, this.modulesPath);
 			}
 			log.info(moduleType, 'loaded [' + modulesLoaded + ']');
 		});
@@ -32,10 +39,22 @@ module.exports = class ModuleLoader {
 
 var loadedModules = {};
 
-function _requireModules(moduleType, moduleArray) {
+function _requireCoreModules(moduleArray, modulesPath) {
+	let modulesLoadedList = '';
+	log.test('_requireCoreModules', moduleArray)
+	moduleArray.forEach(coreModule => {
+		log.test(modulesPath + coreModule + '.js')
+		loadedModules[coreModule] = require(modulesPath + coreModule + '.js');
+	});
+
+	modulesLoadedList += moduleArray.join(', ');
+	return modulesLoadedList;
+}
+
+function _requireModules(moduleType, moduleArray, modulesPath) {
 	let modulesLoadedList = '';
 	for (let i = 0; i < moduleArray.length; i++) {
-		loadedModules[moduleArray[i]] = require(Core._MODULES + moduleType + '/' + moduleArray[i] + '.js');
+		loadedModules[moduleArray[i]] = require(modulesPath + moduleType + '/' + moduleArray[i] + '.js');
 	}
 	modulesLoadedList += moduleArray.join(', ');
 	return modulesLoadedList;

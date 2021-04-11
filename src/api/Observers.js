@@ -53,10 +53,19 @@ module.exports = class Observers {
 
 	static attachFluxParser(type, subject, fluxParser) {
 		log.trace('attachFluxParser', type, subject);
-		Observers[type]()[subject].subscribe({
-			next: flux => fluxParser(flux),
-			error: err => Core.error('Flux error', err)
-		});
+		if (type) {
+			Observers[type]()[subject].subscribe({
+				next: flux => fluxParser(flux),
+				error: err => Core.error('Flux error', err)
+			});
+		}
+		else {
+			log.test('attachFluxParser', type, subject);
+			Observers[subject]().subscribe({
+				next: flux => fluxParser(flux),
+				error: err => Core.error('Flux error', err)
+			});
+		}
 	}
 
 	static isReady() {

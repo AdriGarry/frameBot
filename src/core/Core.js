@@ -73,7 +73,6 @@ function initializeContext(descriptor, forcedParams, startTime) {
 	}
 	if (forcedParamsLog != '') console.log('forced', forcedParamsLog);
 
-	// log.table(Core.conf(), 'CONFIG'); // deprecated
 	if (Core.isAwake()) {
 		spawn('omxplayer', ['--vol', -602, Core._MP3 + 'system/startup.mp3']);
 	}
@@ -97,8 +96,12 @@ function initializeContext(descriptor, forcedParams, startTime) {
 	new Flux('service|context|update', confUpdate, { delay: 0.1, log: 'debug' });
 
 	log.info('Core context initialized [' + Utils.executionTime(startTime) + 'ms]');
-	let moduleLoader = new ModuleLoader(descriptor.modules);
-	moduleLoader.load();
+	let coreModuleLoader = new ModuleLoader(['context'], Core._CORE_MODULES);
+	coreModuleLoader.loadCoreModules();
+	coreModuleLoader.setupCron();
+
+	let moduleLoader = new ModuleLoader(descriptor.modules, Core._MODULES);
+	moduleLoader.loadModules();
 	log.info('all modules loaded [' + Utils.executionTime(Core.startTime) + 'ms]');
 
 	new Flux('interface|server|start', null, { log: 'trace' });

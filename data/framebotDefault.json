@@ -3,6 +3,7 @@
 		"_SRC": "src/",
 		"_API": "src/api/",
 		"_CORE": "src/core/",
+		"_CORE_MODULES": "src/core/modules/",
 		"_MODULES": "src/modules/",
 		"_SHELL": "src/shell/",
 		"_WEB": "src/web/",
