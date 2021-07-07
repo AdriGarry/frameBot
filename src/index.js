@@ -46,6 +46,9 @@ if (Core.conf('mode') === 'test') {
 	}, 1000);
 }
 
+// CoreErrorEnum log
+const CoreErrorEnum = require('./api/CoreErrorEnum');
+log.test(CoreErrorEnum)
 
 // TTS to test
 //setTimeout(testSound, 3000);
