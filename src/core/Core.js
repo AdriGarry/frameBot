@@ -7,12 +7,12 @@ const fs = require('fs');
 
 const Lock = require('./Lock');
 
-const logger = require('./../api/Logger'),
+const Logger = require('./../api/Logger'),
 	Utils = require('./../api/Utils'),
 	CORE_DEFAULT = require(_PATH + 'data/framebotDefault.json');
 // const CoreError = require(_PATH + 'src/api/CoreError.js');
 
-const log = new logger(__filename);
+const log = new Logger(__filename);
 
 var Core = {},
 	CoreError;
@@ -23,7 +23,7 @@ module.exports = {
 };
 
 // TODO to class => singleton or static ?
-function _setUpCoreObject(Core, descriptor, startTime) {
+function _setUpCoreObject(Core, descriptor, startTime) { // to constructor
 	Core.startTime = startTime;
 	for (let path in CORE_DEFAULT.paths) {
 		// Setting _PATHS
